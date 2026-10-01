@@ -1,46 +1,76 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Todo</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f1e8">
+  <title>拾光 · 日记与待办</title>
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="拾光首页"><span class="brand-mark">拾</span><span>拾光</span></a>
+      <nav class="nav-tabs" aria-label="主导航">
+        <button class="nav-tab active" data-view="diary">日记</button>
+        <button class="nav-tab" data-view="todo">待办</button>
+      </nav>
+      <p class="today-label" id="today-label"></p>
+    </header>
 
-  <main class="app">
+    <main>
+      <section class="view active" id="diary-view">
+        <div class="diary-heading">
+          <div><p class="eyebrow">MY JOURNAL</p><h1>把今天，轻轻收好。</h1></div>
+          <button class="export-toggle" id="export-toggle" type="button"><span aria-hidden="true">↗</span> 批量导出</button>
+        </div>
 
-    <h1>Todo</h1>
+        <div class="export-bar" id="export-bar" hidden>
+          <div><strong>选择要导出的日记</strong><span id="export-count">已选择 0 篇</span></div>
+          <div class="export-actions">
+            <button class="text-button" id="select-month" type="button">选择本月全部</button>
+            <button class="text-button" id="cancel-export" type="button">取消</button>
+            <button class="primary-button compact" id="download-export" type="button" disabled>导出日记</button>
+          </div>
+        </div>
 
-    <form id="todo-form">
+        <div class="diary-grid">
+          <section class="calendar-card" aria-label="日历">
+            <div class="calendar-header">
+              <button class="icon-button" id="prev-month" type="button" aria-label="上个月">←</button>
+              <div><h2 id="calendar-month"></h2><button class="back-today" id="back-today" type="button">回到今天</button></div>
+              <button class="icon-button" id="next-month" type="button" aria-label="下个月">→</button>
+            </div>
+            <div class="weekdays" aria-hidden="true"><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span><span>日</span></div>
+            <div class="calendar-days" id="calendar-days"></div>
+            <div class="calendar-legend"><span><i class="legend-dot"></i> 有日记</span><span class="export-hint" id="export-hint" hidden>点击日期进行多选</span></div>
+          </section>
 
-      <input
-        id="todo-input"
-        type="text"
-        placeholder="今天要做什么？"
-        autocomplete="off"
-      >
+          <section class="editor-card">
+            <div class="editor-date-row">
+              <div class="date-badge" id="date-badge"><span></span><strong></strong></div>
+              <div><p class="editor-weekday" id="editor-weekday"></p><p class="editor-full-date" id="editor-full-date"></p></div>
+              <span class="save-state" id="save-state">尚未记录</span>
+            </div>
+            <div class="paper">
+              <textarea id="diary-input" aria-label="日记正文" placeholder="今天发生了什么？&#10;&#10;不必写得完整，只要是真实的。" maxlength="20000"></textarea>
+              <div class="paper-footer"><span id="word-count">0 字</span><button class="primary-button" id="save-diary" type="button">保存日记</button></div>
+            </div>
+          </section>
+        </div>
+      </section>
 
-      <button type="submit">
-        添加
-      </button>
-
-    </form>
-
-    <ul id="todo-list"></ul>
-
-  </main>
-
+      <section class="view" id="todo-view">
+        <div class="todo-wrap">
+          <div class="todo-heading"><div><p class="eyebrow">TO-DO LIST</p><h1>今日待办</h1></div><span id="todo-progress">0 项待完成</span></div>
+          <form id="todo-form"><input id="todo-input" type="text" placeholder="今天要做什么？" autocomplete="off" maxlength="120"><button class="primary-button" type="submit">添加</button></form>
+          <ul id="todo-list"></ul>
+          <p class="empty-todo" id="empty-todo">清单空空的，享受当下吧。</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="app.js"></script>
-
 </body>
-
 </html>
